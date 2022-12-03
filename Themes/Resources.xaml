@@ -1,0 +1,74 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:conv="clr-namespace:xControl.Simple.Utils"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <FontFamily x:Key="Segoe">
+        pack://application:,,,/xControl.Simple;component/Resources/SegMDL2.ttf#Segoe MDL2 Assets
+    </FontFamily>
+
+    <x:Static x:Key="VISCONV_PARAM_THESAME"
+              MemberType="{x:Type conv:Converters+VisibilityConverter+ConvertMode}"
+              Member="TheSame" />
+
+    <x:Static x:Key="VISCONV_PARAM_ONTHECONTRARY"
+              MemberType="{x:Type conv:Converters+VisibilityConverter+ConvertMode}"
+              Member="OnTheContrary" />
+
+    <x:Static x:Key="VisConv"
+              MemberType="{x:Type conv:Converters+VisibilityConverter}"
+              Member="Singleton" />
+
+    <sys:Double x:Key="DefaultToolTipFontSize">12</sys:Double>
+
+    <sys:Double x:Key="DefaultScrollbarThickness">24</sys:Double>
+    <sys:Int32 x:Key="DefaultScrollbarInterval">50</sys:Int32>
+
+    <Style x:Key="DefaultToolTipStyle"
+           TargetType="ToolTip">
+        <Setter Property="Placement"
+                Value="MousePoint" />
+        <Setter Property="HorizontalOffset"
+                Value="8" />
+        <Setter Property="VerticalOffset"
+                Value="24" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="BorderBrush"
+                Value="#A0A0A0" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Background"
+                Value="#2B2B2B" />
+        <Setter Property="DataContext"
+                Value="{Binding PlacementTarget, RelativeSource={RelativeSource Mode=Self}}" />
+    </Style>
+
+    <Style x:Key="DefaultToolTipTextBlockStyle"
+           TargetType="TextBlock">
+        <Setter Property="Foreground"
+                Value="White" />
+        <Setter Property="FontWeight"
+                Value="Light" />
+        <Setter Property="FontSize"
+                Value="{StaticResource DefaultToolTipFontSize}" />
+    </Style>
+
+    <Style x:Key="DefaultScrollRepeatButton"
+           TargetType="RepeatButton">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Grid Background="{TemplateBinding Background}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
