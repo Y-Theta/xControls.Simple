@@ -19,7 +19,6 @@ namespace xControl.Simple.Common
                 if (value is ViewModelBase vm)
                 {
                     var avator = ViewModelAvator.CreateViewModelAvator(vm);
-                    var props = avator.GetType().GetProperties();
                     if (avator != null)
                     {
                         base.Source = avator;

@@ -21,6 +21,18 @@ namespace xControl.Simple.Common
         private static AssemblyBuilder _dynamicAssembly;
         private static ModuleBuilder _dynamicModule;
 
+
+        public static T CreateViewModelAvator<T>() 
+            where T : ViewModelBase
+        {
+            Type ttype = typeof(T);
+            if (!_avatorCache.ContainsKey(ttype))
+            {
+                CreateViewModelAvatorT(ttype);
+            }
+            return Activator.CreateInstance(_avatorCache[ttype], new object[0]) as T;
+        }
+
         public static object CreateViewModelAvator(object instance)
         {
             Type ttype = instance.GetType();
