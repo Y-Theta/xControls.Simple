@@ -7,6 +7,10 @@
         pack://application:,,,/xControl.Simple;component/Resources/SegMDL2.ttf#Segoe MDL2 Assets
     </FontFamily>
 
+    <FontFamily x:Key="Questrial">
+        pack://application:,,,/xControl.Simple;component/Resources/Questrial.ttf#Questrial
+    </FontFamily>
+
     <x:Static x:Key="VISCONV_PARAM_THESAME"
               MemberType="{x:Type conv:Converters+VisibilityConverter+ConvertMode}"
               Member="TheSame" />

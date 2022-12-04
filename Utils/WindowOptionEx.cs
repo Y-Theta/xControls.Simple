@@ -105,7 +105,7 @@ namespace xControl.Simple.Utils
             SetBlur(element, (AccentState)e.NewValue);
         }
 
-        private static void EnableBlur(IntPtr hwnd, AccentState state)
+        internal static void EnableBlur(IntPtr hwnd, AccentState state)
         {
 
             var accent = new AccentPolicy

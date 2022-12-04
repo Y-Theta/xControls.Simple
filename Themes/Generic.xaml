@@ -8,6 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/xControl.Simple;component/Themes/Resources.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
+    
     <Style TargetType="btn:ButtonEx">
         <Setter Property="FontFamily"
                 Value="{StaticResource Segoe}" />
@@ -1021,5 +1022,31 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
+    <Style TargetType="primitive:PopupEx">
+        <Setter Property="AllowsTransparency"
+                Value="True" />
+    </Style>
+
+    <Style TargetType="primitive:BorderEx">
+        <Setter Property="BorderThickness"
+                Value="2" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+    </Style>
+
+    <Style TargetType="primitive:FrameEx">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="primitive:FrameEx">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter Content="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

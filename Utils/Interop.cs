@@ -33,5 +33,8 @@ namespace xControl.Simple.Utils
         internal static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter,
             int x, int y, int width, int height, uint flags);
 
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetWindowRect(IntPtr hWnd, out _RECT lpRect);
     }
 }
