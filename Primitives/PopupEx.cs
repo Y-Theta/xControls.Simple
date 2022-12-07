@@ -439,7 +439,6 @@ namespace xControl.Simple.Primitives
         {
             _update = true;
             ComputeOffset();
-
         }
 
         /// <summary>
