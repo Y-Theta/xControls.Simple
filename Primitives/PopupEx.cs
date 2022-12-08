@@ -193,6 +193,15 @@ namespace xControl.Simple.Primitives
             ((PopupEx)d).SetBlur((bool)e.NewValue);
         }
 
+        public bool AutoArrange
+        {
+            get { return (bool)GetValue(AutoArrangeProperty); }
+            set { SetValue(AutoArrangeProperty, value); }
+        }
+        public static readonly DependencyProperty AutoArrangeProperty =
+            DependencyProperty.Register("AutoArrange", typeof(bool),
+                typeof(PopupEx), new PropertyMetadata(true));
+
         /// <summary>
         /// 依赖对象改变事件
         /// </summary>
@@ -316,7 +325,7 @@ namespace xControl.Simple.Primitives
             }
             else
             {
-                if (!(PlacementTarget is null))
+                if (AutoArrange && !(PlacementTarget is null))
                 {
                     Placement = PlacementMode.RelativePoint;
                     //当Popup的直接对象是窗口时，若窗口隐藏，则使用全局布局
@@ -326,6 +335,7 @@ namespace xControl.Simple.Primitives
                     }
                     ComputeOffset();
                 }
+
                 RemoveAttachWindowHook();
                 AddAttachWindowHook();
             }
@@ -422,10 +432,15 @@ namespace xControl.Simple.Primitives
         {
             if (!Message)
                 return;
-            if ((bool)e.NewValue)
-                Placement = PlacementMode.RelativePoint;
-            else
-                Placement = PlacementMode.AbsolutePoint;
+
+            if (AutoArrange)
+            {
+                if ((bool)e.NewValue)
+                    Placement = PlacementMode.RelativePoint;
+                else
+                    Placement = PlacementMode.AbsolutePoint;
+            }
+           
             _update = true;
             ComputeOffset();
         }

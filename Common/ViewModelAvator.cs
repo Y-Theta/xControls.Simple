@@ -73,7 +73,7 @@ namespace xControl.Simple.Common
             {
                 if (prop.GetCustomAttribute<ObservablePropAttribute>() is ObservablePropAttribute attr)
                 {
-                    CreatePropAvator(typeBuilder, prop, null);
+                    CreatePropAvator(typeBuilder, prop, Inotifyfield);
                 }
             }
             #endregion
@@ -92,7 +92,6 @@ namespace xControl.Simple.Common
         private static void CreatePropAvator(TypeBuilder typeBuilder, PropertyInfo propinfo,
             FieldBuilder notify = null)
         {
-      
 
             var propbuilder = typeBuilder.DefineProperty(
                 propinfo.Name,
@@ -102,9 +101,9 @@ namespace xControl.Simple.Common
 
             #region   field
             var fieldBuilder = typeBuilder.DefineField(
-          $"_{propinfo.Name.ToLower()}",
-          propinfo.PropertyType,
-          FieldAttributes.Private);
+                $"_{propinfo.Name.ToLower()}",
+                propinfo.PropertyType,
+                FieldAttributes.Private);
             #endregion
 
             #region   SetMethod
@@ -130,19 +129,19 @@ namespace xControl.Simple.Common
             setIl.Emit(OpCodes.Ldarg_1);
             setIl.Emit(OpCodes.Stfld, fieldBuilder);
 
-            //setIl.Emit(OpCodes.Ldarg_0);
-            //setIl.Emit(OpCodes.Ldfld, notify);
-            //setIl.Emit(OpCodes.Dup);
-            //setIl.Emit(OpCodes.Brtrue_S, a);
-            //setIl.Emit(OpCodes.Pop);
-            //setIl.Emit(OpCodes.Br_S, ret);
-            //setIl.MarkLabel(a);
+            setIl.Emit(OpCodes.Ldarg_0);
+            setIl.Emit(OpCodes.Ldfld, notify);
+            setIl.Emit(OpCodes.Dup);
+            setIl.Emit(OpCodes.Brtrue_S, a);
+            setIl.Emit(OpCodes.Pop);
+            setIl.Emit(OpCodes.Br_S, ret);
+            setIl.MarkLabel(a);
 
-            //setIl.Emit(OpCodes.Ldarg_0);
-            //setIl.Emit(OpCodes.Ldstr, propinfo.Name);
-            //setIl.Emit(OpCodes.Newobj, typeof(PropertyChangedEventArgs).GetConstructor(new Type[] { typeof(string) }));
-            //setIl.Emit(OpCodes.Callvirt, typeof(PropertyChangedEventHandler).GetMethod("Invoke"));
-            //setIl.MarkLabel(ret);
+            setIl.Emit(OpCodes.Ldarg_0);
+            setIl.Emit(OpCodes.Ldstr, propinfo.Name);
+            setIl.Emit(OpCodes.Newobj, typeof(PropertyChangedEventArgs).GetConstructor(new Type[] { typeof(string) }));
+            setIl.Emit(OpCodes.Callvirt, typeof(PropertyChangedEventHandler).GetMethod("Invoke"));
+            setIl.MarkLabel(ret);
             setIl.Emit(OpCodes.Ret);
 
             propbuilder.SetSetMethod(setMethodBuilder);
