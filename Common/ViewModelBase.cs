@@ -14,15 +14,9 @@ namespace xControl.Simple.Common
     /// <summary>
     /// 
     /// </summary>
-    public class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase
     {
         public class ObservablePropAttribute : Attribute { }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void Notify(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
     }
 }
