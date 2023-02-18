@@ -1,19 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFrameworks>net6.0-windows;net47</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<LangVersion>10.0</LangVersion>
 		<UseWPF>true</UseWPF>
+		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <None Remove=".git" />
 	  <None Remove=".gitignore" />
+	  <None Remove="Resources\Questrial.ttf" />
 	  <None Remove="Resources\SegMDL2.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Resource Include="Resources\Questrial.ttf" />
 	  <Resource Include="Resources\SegMDL2.ttf">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>

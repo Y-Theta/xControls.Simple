@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.CodeDom;
-using System.Reflection.PortableExecutable;
 using static xControl.Simple.Common.ViewModelBase;
 
 namespace xControl.Simple.Common

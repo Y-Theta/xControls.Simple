@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Effects;
 using System.Windows;
-using System.Reflection.Metadata;
 using static xControl.Simple.Utils.Interop;
 using System.Runtime.InteropServices;
 
