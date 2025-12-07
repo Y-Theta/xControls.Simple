@@ -33,4 +33,4 @@ jobs:
       run: dotnet pack ./xControls.Simple/xControl.Simple.csproj --configuration Release --no-build --output ../nupkgs
 
     - name: Push the NuGet package to nuget.org
-      run: dotnet nuget push ./xControls.Simple/nupkgs/xControl.Simple.1.0.0.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push ../nupkgs/xControl.Simple.1.0.0.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
