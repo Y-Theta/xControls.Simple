@@ -1,12 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFrameworks>net6.0-windows;net47</TargetFrameworks>
-		<Nullable>enable</Nullable>
-		<LangVersion>10.0</LangVersion>
-		<UseWPF>true</UseWPF>
-		<Nullable>disable</Nullable>
-	</PropertyGroup>
+	<Import Condition="Exists('../common.props')" Project="../common.props" />
 
 	<ItemGroup>
 	  <None Remove=".git" />

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Condition="Exists('../common.props')" Project="../common.props" />
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\xControls.Simple\xControl.Simple.csproj" />
+	</ItemGroup>
+
+</Project>

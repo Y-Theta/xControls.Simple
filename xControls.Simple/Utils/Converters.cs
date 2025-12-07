@@ -57,7 +57,6 @@ namespace xControl.Simple.Utils
             }
         }
 
-
         public class ControlConverter : ValueConverterBase<ControlConverter>
         {
 
