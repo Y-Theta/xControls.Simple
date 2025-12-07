@@ -1,0 +1,31 @@
+name: publish to nuget
+on:
+  push:
+    branches:
+      - release # Default release branch, may also be named 'master' or 'develop'
+jobs:
+  publish:
+    name: build, pack & publish
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1 # Ensures MSBuild is available
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.2 # Ensures NuGet CLI is available
+
+    - name: Restore NuGet packages
+      run: nuget restore YourSolutionName.sln # Replace with your solution file
+
+    - name: Build .NET 4.7 Project
+      run: msbuild xControl.Simple.csproj /p:Configuration=Release /p:Platform="Any CPU" /t:Rebuild # Replace with your project name
+
+    - name: Create NuGet Package
+      run: nuget pack xControl.Simple.csproj -OutputDirectory nuget_packages -Properties Configuration=Release # Replace with your project name
+
+    - name: Publish NuGet Package to NuGet.org
+      if: github.event_name == 'release' && github.event.action == 'published' # Publish only on GitHub Release
+      run: nuget push nuget_packages/*.nupkg -Source "https://api.nuget.org/v3/index.json" -ApiKey ${{ secrets.NUGET_API_KEY }}

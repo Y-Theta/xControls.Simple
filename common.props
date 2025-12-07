@@ -1,6 +1,6 @@
 <Project>
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-windows;net47;net472;net48</TargetFrameworks>
+		<TargetFrameworks>net472</TargetFrameworks>
 		<LangVersion>10.0</LangVersion>
 		<UseWPF>true</UseWPF>
 		<Nullable>disable</Nullable>
