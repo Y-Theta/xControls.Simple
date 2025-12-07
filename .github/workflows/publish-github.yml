@@ -23,12 +23,11 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.2 # Ensures NuGet CLI is available
 
-    - name: Restore dependencies
-      # The 'dotnet restore' command is the preferred modern way to restore dependencies
-      run: dotnet restore xControl.Simple.sln
+    - name: Restore NuGet packages
+      run: nuget restore xControl.Simple.sln # Replace with your solution file
 
     - name: Build .NET 4.7 Project
-      run: dotnet build ./xControls.Simple/xControl.Simple.csproj --configuration Release --no-restore
+      run: dotnet build  ./xControls.Simple/xControl.Simple.csproj --configuration Release --no-restore
 
     - name: Pack the project into a .nupkg file
       run: dotnet pack ./xControls.Simple/xControl.Simple.csproj --configuration Release --no-build --output nupkgs
