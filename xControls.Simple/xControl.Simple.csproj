@@ -2,7 +2,6 @@
 	<Import Condition="Exists('../common.props')" Project="../common.props" />
 
 	<PropertyGroup>
-		<PackageOutputPath>$(SolutionDir)\packages</PackageOutputPath>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IsPackable>true</IsPackable>
 		<PackageId>xControl.Simple</PackageId>
