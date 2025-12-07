@@ -4,5 +4,6 @@
 		<LangVersion>10.0</LangVersion>
 		<UseWPF>true</UseWPF>
 		<Nullable>disable</Nullable>
+		<OutputPath>..\output</OutputPath>
 	</PropertyGroup>
 </Project>
