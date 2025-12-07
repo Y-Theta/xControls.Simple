@@ -7,11 +7,5 @@
 		<!--<OutputPath>..\output</OutputPath>-->
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<IsPackable>true</IsPackable>
-		<PackageId>xControl.Simple</PackageId>
-		<Version>1.0.0</Version>
-		<Authors>Y-Theta</Authors>
-		<Description>A WPF Control Library.</Description>
-	</PropertyGroup>
+
 </Project>
