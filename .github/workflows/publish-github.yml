@@ -21,10 +21,10 @@ jobs:
       run: nuget restore xControl.Simple.sln # Replace with your solution file
 
     - name: Build .NET 4.7 Project
-      run: msbuild xControl.Simple.csproj /p:Configuration=Release /p:Platform="Any CPU" /t:Rebuild # Replace with your project name
+      run: msbuild ./xControls.Simple/xControl.Simple.csproj /p:Configuration=Release /p:Platform="Any CPU" /t:Rebuild # Replace with your project name
 
     - name: Create NuGet Package
-      run: nuget pack xControl.Simple.csproj -OutputDirectory nuget_packages -Properties Configuration=Release # Replace with your project name
+      run: nuget pack ./xControls.Simple/xControl.Simple.csproj -OutputDirectory nuget_packages -Properties Configuration=Release # Replace with your project name
 
     - name: Publish NuGet Package to NuGet.org
       if: github.event_name == 'release' && github.event.action == 'published' # Publish only on GitHub Release
