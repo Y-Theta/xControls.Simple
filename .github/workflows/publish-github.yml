@@ -1,8 +1,14 @@
 name: publish to nuget
+
 on:
   push:
     branches:
       - release # Default release branch, may also be named 'master' or 'develop'
+
+env:
+  PROJ_PATH: "./xControls.Simple/xControl.Simple.csproj"
+  PROJ_NAME: "xControl.Simple"
+
 jobs:
   publish:
     name: build, pack & publish
@@ -17,20 +23,14 @@ jobs:
         # Specify the SDK version you need. Can also use a glob pattern like '8.0.x'
         dotnet-version: '8.0.100' 
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.1 # Ensures MSBuild is available
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.2 # Ensures NuGet CLI is available
-
     - name: Restore NuGet packages
-      run: nuget restore xControl.Simple.sln # Replace with your solution file
+      run: dotnet nuget restore ${{ env.PROJ_NAME }}.sln # Replace with your solution file
 
-    - name: Build .NET 4.7 Project
-      run: dotnet build  ./xControls.Simple/xControl.Simple.csproj --configuration Release --no-restore
+    - name: Build Project
+      run: dotnet build ${{ env.PROJ_PATH }} --configuration Release --no-restore
 
     - name: Pack the project into a .nupkg file
-      run: dotnet pack ./xControls.Simple/xControl.Simple.csproj --configuration Release --no-build --output ../nupkgs
+      run: dotnet pack ${{ env.PROJ_PATH }} --configuration Release --no-build --output ${{ github.workspace }}/nupkgs
 
     - name: Push the NuGet package to nuget.org
-      run: dotnet nuget push ../nupkgs/xControl.Simple.*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push ${{ github.workspace }}/nupkgs/${{ env.PROJ_NAME }}.*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
