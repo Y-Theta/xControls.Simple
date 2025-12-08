@@ -91,6 +91,58 @@ namespace xControl.Simple.Utils
             }
         }
 
+        public class GridLengthConverter : ValueConverterBase<GridLengthConverter>
+        {
+            public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                if (value is double dnum)
+                {
+                    return new GridLength(dnum, GridUnitType.Pixel);
+                }
+                else if (value is int inum)
+                {
+                    return new GridLength(inum, GridUnitType.Pixel);
+                }
+                else if (value is string str && double.TryParse(str,out var sdnum))
+                {
+                    return new GridLength(sdnum, GridUnitType.Pixel);
+                }
+
+                return new GridLength(1, GridUnitType.Star);
+            }
+
+            public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class CornerRadiusConverter : ValueConverterBase<CornerRadiusConverter>
+        {
+            public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                CornerRadius aim = new CornerRadius(0);
+                if (value is CornerRadius cr1)
+                {
+                    aim = cr1;
+                }
+                else if (value is double crd)
+                {
+                    aim = new CornerRadius(crd);
+                }
+                if (parameter is double dnum)
+                {
+                    return new CornerRadius(aim.TopLeft + dnum, aim.TopRight + dnum, aim.BottomRight + dnum, aim.BottomLeft + dnum);
+                }
+                return aim;
+            }
+
+            public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public class MultiConverter : IMultiValueConverter
         {
             public static readonly MultiConverter Singleton = new MultiConverter();
