@@ -1,8 +1,14 @@
 name: publish to nuget
+
 on:
   push:
     branches:
       - release # Default release branch, may also be named 'master' or 'develop'
+
+env:
+  PROJ_PATH: "./xControls.Simple/xControl.Simple.csproj"
+  PROJ_NAME: "xControl.Simple"
+
 jobs:
   publish:
     name: build, pack & publish
@@ -11,21 +17,20 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.1 # Ensures MSBuild is available
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.2 # Ensures NuGet CLI is available
+    - name: Setup .NET environment
+      uses: actions/setup-dotnet@v4
+      with:
+        # Specify the SDK version you need. Can also use a glob pattern like '8.0.x'
+        dotnet-version: '8.0.100' 
 
     - name: Restore NuGet packages
-      run: nuget restore YourSolutionName.sln # Replace with your solution file
+      run: dotnet restore ${{ env.PROJ_NAME }}.sln # Replace with your solution file
 
-    - name: Build .NET 4.7 Project
-      run: msbuild xControl.Simple.csproj /p:Configuration=Release /p:Platform="Any CPU" /t:Rebuild # Replace with your project name
+    - name: Build Project
+      run: dotnet build ${{ env.PROJ_PATH }} --configuration Release --no-restore
 
-    - name: Create NuGet Package
-      run: nuget pack xControl.Simple.csproj -OutputDirectory nuget_packages -Properties Configuration=Release # Replace with your project name
+    - name: Pack the project into a .nupkg file
+      run: dotnet pack ${{ env.PROJ_PATH }} --configuration Release --no-build --output ${{ github.workspace }}/nupkgs
 
-    - name: Publish NuGet Package to NuGet.org
-      if: github.event_name == 'release' && github.event.action == 'published' # Publish only on GitHub Release
-      run: nuget push nuget_packages/*.nupkg -Source "https://api.nuget.org/v3/index.json" -ApiKey ${{ secrets.NUGET_API_KEY }}
+    - name: Push the NuGet package to nuget.org
+      run: dotnet nuget push ${{ github.workspace }}/nupkgs/${{ env.PROJ_NAME }}.*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json

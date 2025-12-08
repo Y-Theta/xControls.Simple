@@ -1,8 +1,11 @@
 <Project>
 	<PropertyGroup>
-		<TargetFrameworks>net472</TargetFrameworks>
+		<TargetFrameworks>net472;net47;net48;net8-windows</TargetFrameworks>
 		<LangVersion>10.0</LangVersion>
 		<UseWPF>true</UseWPF>
 		<Nullable>disable</Nullable>
+		<!--<OutputPath>..\output</OutputPath>-->
 	</PropertyGroup>
+
+
 </Project>

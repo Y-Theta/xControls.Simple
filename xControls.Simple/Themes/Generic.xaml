@@ -3,7 +3,8 @@
                     xmlns:btn="clr-namespace:xControl.Simple.Button"
                     xmlns:scroll="clr-namespace:xControl.Simple.Scroll"
                     xmlns:primitive="clr-namespace:xControl.Simple.Primitives"
-                    xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
+                    xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/xControl.Simple;component/Themes/Resources.xaml" />
@@ -1397,15 +1398,24 @@
         </Setter>
     </Style>
 
+    <sys:Double x:Key="InnerCornerRadiusOffset">-2</sys:Double>
     <Style TargetType="{x:Type primitive:WindowEx}">
         <Setter Property="TitleAreaHeight"
                 Value="32" />
         <Setter Property="StatusAreaHeight"
                 Value="0" />
+        <Setter Property="Background"
+                Value="White" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="BorderBrush"
+                Value="Black" />
+        <Setter Property="CornerRadius"
+                Value="6" />
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome ResizeBorderThickness="6"
-                              CornerRadius="4"
+                              CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=primitive:WindowEx},Converter={StaticResource CornerRadiusConv}}"
                               NonClientFrameEdges="None"
                               GlassFrameThickness="0"
                               CaptionHeight="{Binding TitleAreaHeight ,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=primitive:WindowEx}}" />
@@ -1414,16 +1424,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type primitive:WindowEx}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border CornerRadius="{Binding CornerRadius,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=primitive:WindowEx},Converter={StaticResource CornerRadiusConv},ConverterParameter={StaticResource InnerCornerRadiusOffset}}" 
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="{Binding TitleAreaHeight,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                <RowDefinition Height="{Binding TitleAreaHeight,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource GridConv}}" />
                                 <RowDefinition Height="*" />
-                                <RowDefinition Height="{Binding StatusAreaHeight,RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                <RowDefinition Height="{Binding StatusAreaHeight,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource GridConv}}" />
                             </Grid.RowDefinitions>
-                            <Grid>
+                            <Grid WindowChrome.IsHitTestVisibleInChrome="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="*" />
@@ -1433,6 +1444,9 @@
                                                   WindowChrome.IsHitTestVisibleInChrome="True" />
                                 <TextBlock Grid.Column="0"
                                            Grid.ColumnSpan="3"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"
                                            Style="{TemplateBinding TitleStyle}"
                                            Text="{TemplateBinding Title}" />
                                 <DockPanel Grid.Column="2"
@@ -1442,17 +1456,21 @@
                                                   LabelVisibility="Collapsed"
                                                   Style="{TemplateBinding PrimCmdButtonStyle}"/>
                                     <btn:ButtonEx DockPanel.Dock="Right"
+                                                  Content="&#xE702;"
                                                   LabelVisibility="Collapsed"
-                                                  Style="{TemplateBinding PrimCmdButtonStyle}" />
+                                                  Style="{TemplateBinding CmdButtonStyle}" />
                                     <btn:ButtonEx DockPanel.Dock="Right"
+                                                  Content="&#xE703;"
                                                   LabelVisibility="Collapsed"
-                                                  Style="{TemplateBinding PrimCmdButtonStyle}" />
+                                                  Style="{TemplateBinding CmdButtonStyle}" />
                                 </DockPanel>
                             </Grid>
-                            <ContentPresenter Grid.Row="1"
-                                              Content="{TemplateBinding Content}" />
+                            <AdornerDecorator Grid.Row="1">
+                                <ContentPresenter Content="{TemplateBinding Content}" />
+                            </AdornerDecorator>
                             <ContentPresenter Grid.Row="2"
-                                              Content="{TemplateBinding StatusBarArea}" />
+                                              Content="{TemplateBinding StatusBarArea}"
+                                              Visibility="{Binding StatusBarArea,RelativeSource={RelativeSource Mode=TemplatedParent},Converter={StaticResource VisConv}}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
