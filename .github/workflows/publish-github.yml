@@ -24,7 +24,7 @@ jobs:
         dotnet-version: '8.0.100' 
 
     - name: Restore NuGet packages
-      run: dotnet nuget restore ${{ env.PROJ_NAME }}.sln # Replace with your solution file
+      run: dotnet restore ${{ env.PROJ_NAME }}.sln # Replace with your solution file
 
     - name: Build Project
       run: dotnet build ${{ env.PROJ_PATH }} --configuration Release --no-restore
