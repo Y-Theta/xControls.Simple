@@ -23,6 +23,14 @@ jobs:
         # Specify the SDK version you need. Can also use a glob pattern like '8.0.x'
         dotnet-version: '8.0.100' 
 
+    - name: Extract Project Version
+      id: extract_version
+      run: |
+        # 使用 PowerShell 解析 csproj 文件中的 Version 属性
+        $version = Select-String -Path ${{ env.PROJ_PATH }} -Pattern '<Version>(.*?)</Version>' | % { $_.Matches.Groups[1].Value }
+        echo "PROJECT_VERSION=$version" >> $env:GITHUB_ENV
+        echo "Extracted version: $version"
+
     - name: Restore NuGet packages
       run: dotnet restore ${{ env.PROJ_NAME }}.sln # Replace with your solution file
 
@@ -33,4 +41,4 @@ jobs:
       run: dotnet pack ${{ env.PROJ_PATH }} --configuration Release --no-build --output ${{ github.workspace }}/nupkgs
 
     - name: Push the NuGet package to nuget.org
-      run: dotnet nuget push ${{ github.workspace }}/nupkgs/${{ env.PROJ_NAME }}.*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push ${{ github.workspace }}/nupkgs/${{ env.PROJ_NAME }}.${{ env.PROJECT_VERSION }}.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
