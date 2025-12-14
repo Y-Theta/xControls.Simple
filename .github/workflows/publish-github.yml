@@ -41,4 +41,5 @@ jobs:
       run: dotnet pack ${{ env.PROJ_PATH }} --configuration Release --no-build --output ${{ github.workspace }}/nupkgs
 
     - name: Push the NuGet package to nuget.org
+      continue-on-error: true
       run: dotnet nuget push ${{ github.workspace }}/nupkgs/${{ env.PROJ_NAME }}.${{ env.PROJECT_VERSION }}.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
